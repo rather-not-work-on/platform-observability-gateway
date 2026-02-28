@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "o11y-gateway-c5-ingest-contract",
+  "title": "Observability Ingest Event",
+  "type": "object",
+  "required": [
+    "trace_id",
+    "span_id",
+    "run_id",
+    "event_id",
+    "sequence_no",
+    "event_time",
+    "delivery_status"
+  ],
+  "properties": {
+    "trace_id": {"type": "string"},
+    "span_id": {"type": "string"},
+    "run_id": {"type": "string"},
+    "event_id": {"type": "string"},
+    "sequence_no": {"type": "integer"},
+    "event_time": {"type": "string"},
+    "delivery_status": {
+      "type": "string",
+      "enum": ["pending", "delivered", "retriable_failed", "terminal_failed"]
+    }
+  },
+  "additionalProperties": true
+}

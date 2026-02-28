@@ -1,0 +1,13 @@
+{
+  "mode": "local-first",
+  "fallback": {
+    "enabled": true,
+    "queue_backend": "local-file-buffer",
+    "replay_interval_seconds": 30,
+    "max_retries": 5
+  },
+  "dedupe": {
+    "key": "event_id",
+    "window_seconds": 3600
+  }
+}
