@@ -1,0 +1,12 @@
+{
+  "generated_at_utc": "2026-03-01T06:02:43.551416+00:00",
+  "run_id": "federated-ci-local-20260301-o11y",
+  "mode": "dry-run",
+  "normal_report": "artifacts/ingest/federated-ci-local-20260301-o11y-normal.json",
+  "replay_backfill_report": "artifacts/ingest/federated-ci-local-20260301-o11y-delay_and_replay.json",
+  "continuity_ok": true,
+  "duplicate_event_ids": [
+    "evt-002"
+  ],
+  "verdict": "pass"
+}
