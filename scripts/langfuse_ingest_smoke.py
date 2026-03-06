@@ -118,6 +118,11 @@ def main():
     parser = argparse.ArgumentParser(description="LangFuse ingest smoke scenarios")
     parser.add_argument("--scenario", choices=["normal", "delay_and_replay"], default="normal")
     parser.add_argument("--run-id", default=None)
+    parser.add_argument(
+        "--output-dir",
+        default="artifacts/ingest",
+        help="directory where ingest smoke report is written",
+    )
     args = parser.parse_args()
 
     run_id = args.run_id or f"o11y-smoke-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
@@ -153,7 +158,7 @@ def main():
         "events": unique_events,
     }
 
-    out = Path(f"artifacts/ingest/{run_id}-{args.scenario}.json")
+    out = Path(args.output_dir) / f"{run_id}-{args.scenario}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, ensure_ascii=True, indent=2), encoding="utf-8")
 
