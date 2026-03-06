@@ -1,0 +1,53 @@
+name: Observability Gateway Local CI
+
+on:
+  pull_request:
+    paths:
+      - "config/**"
+      - "contracts/**"
+      - "scripts/**"
+      - "README.md"
+      - ".github/workflows/observability-local-ci.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "config/**"
+      - "contracts/**"
+      - "scripts/**"
+      - "README.md"
+      - ".github/workflows/observability-local-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  observability-local-ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run ingest smoke scenarios
+        run: |
+          mkdir -p /tmp/o11y/ingest
+          python3 scripts/langfuse_ingest_smoke.py \
+            --scenario normal \
+            --run-id "ci-${{ github.run_id }}-o11y" \
+            --output-dir /tmp/o11y/ingest
+          python3 scripts/langfuse_ingest_smoke.py \
+            --scenario delay_and_replay \
+            --run-id "ci-${{ github.run_id }}-o11y" \
+            --output-dir /tmp/o11y/ingest
+
+      - name: Validate contract pin
+        run: |
+          mkdir -p /tmp/o11y
+          python3 scripts/validate_contract_pin.py \
+            --output /tmp/o11y/contract-pin-report.json
+
+      - name: Seeded failure guard (deterministic replay + invalid pin)
+        run: bash scripts/test_observability_guardrails.sh
