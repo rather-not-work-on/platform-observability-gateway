@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "o11y-gateway-c5-ingest-smoke-artifact",
+  "title": "Observability Ingest Smoke Artifact",
+  "type": "object",
+  "required": [
+    "generated_at_utc",
+    "run_id",
+    "ingest_profile",
+    "scenario",
+    "verdict",
+    "reason_code",
+    "reason_taxonomy_version",
+    "required_errors",
+    "continuity_ok",
+    "continuity_errors",
+    "summary",
+    "dedupe",
+    "events"
+  ],
+  "properties": {
+    "generated_at_utc": {"type": "string", "format": "date-time"},
+    "run_id": {"type": "string", "minLength": 1},
+    "ingest_profile": {"type": "string", "minLength": 1},
+    "scenario": {
+      "type": "string",
+      "enum": ["normal", "delay_and_replay"]
+    },
+    "verdict": {"type": "string", "enum": ["pass", "fail"]},
+    "reason_code": {
+      "type": "string",
+      "enum": ["ok", "replay_recovered", "missing_required_fields", "continuity_error"]
+    },
+    "reason_taxonomy_version": {"type": "integer", "minimum": 1},
+    "required_errors": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "continuity_ok": {"type": "boolean"},
+    "continuity_errors": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "input_event_count",
+        "unique_event_count",
+        "duplicate_count",
+        "replay_detected",
+        "continuity_ok"
+      ],
+      "properties": {
+        "input_event_count": {"type": "integer", "minimum": 1},
+        "unique_event_count": {"type": "integer", "minimum": 1},
+        "duplicate_count": {"type": "integer", "minimum": 0},
+        "replay_detected": {"type": "boolean"},
+        "continuity_ok": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "dedupe": {
+      "type": "object",
+      "required": ["input_count", "output_count", "duplicate_event_ids"],
+      "properties": {
+        "input_count": {"type": "integer", "minimum": 1},
+        "output_count": {"type": "integer", "minimum": 1},
+        "duplicate_event_ids": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      },
+      "additionalProperties": false
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "object"}
+    }
+  },
+  "additionalProperties": false
+}

@@ -13,11 +13,17 @@ python3 "$ROOT_DIR/scripts/langfuse_ingest_smoke.py" \
   --scenario normal \
   --run-id "$RUN_ID" \
   --output-dir "$OUT_DIR"
+python3 "$ROOT_DIR/scripts/validate_ingest_smoke_evidence.py" \
+  --report "$OUT_DIR/$RUN_ID-normal.json" \
+  --output "$TMP_DIR/o11y-normal-validation.json"
 
 python3 "$ROOT_DIR/scripts/langfuse_ingest_smoke.py" \
   --scenario delay_and_replay \
   --run-id "$RUN_ID" \
   --output-dir "$OUT_DIR"
+python3 "$ROOT_DIR/scripts/validate_ingest_smoke_evidence.py" \
+  --report "$OUT_DIR/$RUN_ID-delay_and_replay.json" \
+  --output "$TMP_DIR/o11y-replay-validation.json"
 
 NORMAL_REPORT="$OUT_DIR/$RUN_ID-normal.json"
 REPLAY_REPORT="$OUT_DIR/$RUN_ID-delay_and_replay.json"
@@ -34,6 +40,12 @@ if normal.get("verdict") != "pass":
     raise SystemExit("normal scenario must pass")
 if replay.get("verdict") != "pass":
     raise SystemExit("delay_and_replay scenario must pass")
+if normal.get("reason_code") != "ok":
+    raise SystemExit(f"normal scenario reason_code must be ok: {normal.get('reason_code')}")
+if replay.get("reason_code") != "replay_recovered":
+    raise SystemExit(
+        f"delay_and_replay scenario reason_code must be replay_recovered: {replay.get('reason_code')}"
+    )
 
 if normal["dedupe"]["output_count"] != 2:
     raise SystemExit("normal output_count must be 2")

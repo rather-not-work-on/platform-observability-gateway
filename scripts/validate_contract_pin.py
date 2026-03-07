@@ -86,7 +86,7 @@ def validate_pin(pin: dict, required_contracts):
 def main():
     parser = argparse.ArgumentParser(description="Validate observability-gateway contract pin policy")
     parser.add_argument("--pin", default="config/contract-pin.json")
-    parser.add_argument("--output", default="artifacts/ingest/contract-pin-report.json")
+    parser.add_argument("--output", default="runtime-artifacts/validation/contract-pin-report.json")
     parser.add_argument("--required-contracts", default="c5-observability-event")
     args = parser.parse_args()
 

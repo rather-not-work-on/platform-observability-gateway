@@ -21,7 +21,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-mkdir -p artifacts/launcher artifacts/ingest
+mkdir -p runtime-artifacts/launcher runtime-artifacts/ingest
 
 if [[ "$MODE" == "dry-run" ]]; then
   echo "[launcher] dry-run mode: running replay/backfill drill"
@@ -34,8 +34,8 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 run_id = "${RUN_ID}"
-normal_path = Path(f"artifacts/ingest/{run_id}-normal.json")
-replay_path = Path(f"artifacts/ingest/{run_id}-delay_and_replay.json")
+normal_path = Path(f"runtime-artifacts/ingest/{run_id}-normal.json")
+replay_path = Path(f"runtime-artifacts/ingest/{run_id}-delay_and_replay.json")
 
 normal = json.loads(normal_path.read_text(encoding="utf-8"))
 replay = json.loads(replay_path.read_text(encoding="utf-8"))
@@ -53,7 +53,7 @@ manifest = {
     "verdict": verdict,
 }
 
-out = Path(f"artifacts/launcher/{run_id}.json")
+out = Path(f"runtime-artifacts/launcher/{run_id}.json")
 out.write_text(json.dumps(manifest, ensure_ascii=True, indent=2), encoding="utf-8")
 print(f"launcher manifest: {out}")
 print(f"continuity_ok={continuity_ok} verdict={verdict}")
