@@ -6,12 +6,14 @@ Local-first observability gateway baseline for UAP runtime.
 - C5 ingest contract skeleton
 - continuity checks for `run_id/trace_id/event_id`
 - delay/replay dedupe smoke validation
+- repo-owned ingest smoke evidence schema and reason taxonomy
 
 ## Layout
 - `contracts/`: ingest contract schema
+- `docs/runbook/`: evidence remediation and operator guidance
 - `config/`: fallback/replay policy examples
 - `scripts/`: ingest smoke checks and local launcher
-- `artifacts/`: ingest smoke reports
+- `runtime-artifacts/`: default local ingest smoke reports (gitignored)
 
 ## Policy Notes
 - default mode: local-first
@@ -22,6 +24,8 @@ Local-first observability gateway baseline for UAP runtime.
 ```bash
 python3 scripts/langfuse_ingest_smoke.py --scenario normal
 python3 scripts/langfuse_ingest_smoke.py --scenario delay_and_replay
+python3 scripts/validate_ingest_smoke_evidence.py \
+  --report runtime-artifacts/ingest/<run_id>-delay_and_replay.json
 python3 scripts/validate_contract_pin.py
 bash scripts/test_observability_guardrails.sh
 ```
@@ -32,17 +36,21 @@ bash scripts/langfuse_stack_launcher.sh --mode dry-run
 ```
 
 Artifacts:
-- `artifacts/ingest/<run_id>-normal.json`
-- `artifacts/ingest/<run_id>-delay_and_replay.json`
-- `artifacts/launcher/<run_id>.json`
+- `runtime-artifacts/ingest/<run_id>-normal.json`
+- `runtime-artifacts/ingest/<run_id>-delay_and_replay.json`
+- `runtime-artifacts/launcher/<run_id>.json`
 
 ## Local CI Baseline
 - workflow: `.github/workflows/observability-local-ci.yml`
 - checks:
   - ingest smoke (`normal`, `delay_and_replay`)
+  - ingest smoke evidence validation (`scripts/validate_ingest_smoke_evidence.py`)
   - deterministic replay/dedupe assertions
   - contract pin validation (`scripts/validate_contract_pin.py`)
   - seeded failure guard (`scripts/test_observability_guardrails.sh`)
+- evidence contract: `contracts/c5-observability-ingest-smoke-artifact.schema.json`
+- reason taxonomy: `config/observability-reason-taxonomy.json`
+- runbook: `docs/runbook/ingest-smoke-evidence-runbook.md`
 
 ### Contract Pin Remediation
 When contract pin validation fails:

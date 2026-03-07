@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "reason_codes": {
+    "ok": "Nominal ingest path completed without replay recovery.",
+    "replay_recovered": "Replay/dedupe path recovered the ingest stream without contract drift.",
+    "missing_required_fields": "At least one ingest event omitted a required contract field.",
+    "continuity_error": "Run/trace continuity or sequence progression violated the ingest contract."
+  }
+}
