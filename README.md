@@ -14,6 +14,15 @@ Local-first observability gateway baseline for UAP runtime.
 - `config/`: fallback/replay policy examples
 - `scripts/`: ingest smoke checks and local launcher
 - `runtime-artifacts/`: default local ingest smoke reports (gitignored)
+- `docs/`: repository topology and extension guidance
+
+Topology guide:
+- `docs/repo-topology.md`
+- `contracts/README.md`
+- `config/README.md`
+- `scripts/README.md`
+- `docs/runbook/README.md`
+- `runtime-artifacts/README.md`
 
 ## Policy Notes
 - default mode: local-first
@@ -48,6 +57,7 @@ Artifacts:
   - deterministic replay/dedupe assertions
   - contract pin validation (`scripts/validate_contract_pin.py`)
   - seeded failure guard (`scripts/test_observability_guardrails.sh`)
+  - topology/module README regression (`scripts/test_module_readmes.sh`)
 - evidence contract: `contracts/c5-observability-ingest-smoke-artifact.schema.json`
 - reason taxonomy: `config/observability-reason-taxonomy.json`
 - runbook: `docs/runbook/ingest-smoke-evidence-runbook.md`
@@ -66,3 +76,5 @@ When contract pin validation fails:
 python3 scripts/validate_contract_pin.py
 bash scripts/test_observability_guardrails.sh
 ```
+
+Generated local runtime outputs stay under `runtime-artifacts/` and remain gitignored except for the tracked module README.
