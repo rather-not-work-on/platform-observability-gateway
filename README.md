@@ -24,6 +24,20 @@ Topology guide:
 - `docs/runbook/README.md`
 - `runtime-artifacts/README.md`
 
+## Workspace Bootstrap
+- `package.json`
+- `pnpm-workspace.yaml`
+- `tsconfig.base.json`
+- `services/telemetry-gateway/`
+- `sinks/langfuse-sink/`
+- `buffer/replay-worker/`
+
+The workspace bootstrap is intentionally thin in this step.
+
+- current Python scripts remain smoke and launcher tooling
+- local runtime outputs stay under `runtime-artifacts/`
+- external sink or replay expansion stays in follow-up cards
+
 ## Policy Notes
 - default mode: local-first
 - fallback mode: local file buffer + replay
