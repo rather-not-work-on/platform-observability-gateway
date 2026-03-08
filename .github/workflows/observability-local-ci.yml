@@ -2,6 +2,14 @@ name: Observability Gateway Local CI
 
 on:
   pull_request:
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "contracts/**"
+      - "config/**"
+      - "scripts/**"
+      - "runtime-artifacts/README.md"
+      - ".github/workflows/observability-local-ci.yml"
   push:
     branches:
       - main
@@ -45,6 +53,9 @@ jobs:
           mkdir -p /tmp/o11y
           python3 scripts/validate_contract_pin.py \
             --output /tmp/o11y/contract-pin-report.json
+
+      - name: Verify topology README contract
+        run: bash scripts/test_module_readmes.sh
 
       - name: Seeded failure guard (deterministic replay + invalid pin)
         run: bash scripts/test_observability_guardrails.sh
