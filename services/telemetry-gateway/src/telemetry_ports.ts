@@ -1,8 +1,14 @@
 export interface TelemetryEnvelope {
   runId: string;
+  missionId: string;
   eventName: string;
   detail?: string;
+  taskId?: string;
+  handoffId?: string;
   traceId?: string;
+  source?: "executor" | "orchestrator" | "provider" | "observability";
+  resultType?: "complete" | "partial" | "failed" | "canceled";
+  reasonCode?: string;
 }
 
 export interface TelemetryIngestRequest {
