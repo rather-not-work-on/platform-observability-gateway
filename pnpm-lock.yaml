@@ -20,6 +20,18 @@ importers:
 
   services/telemetry-gateway: {}
 
+  services/telemetry-gateway-composer:
+    dependencies:
+      '@rather-not-work-on/langfuse-sink':
+        specifier: workspace:*
+        version: link:../../sinks/langfuse-sink
+      '@rather-not-work-on/replay-worker':
+        specifier: workspace:*
+        version: link:../../buffer/replay-worker
+      '@rather-not-work-on/telemetry-gateway':
+        specifier: workspace:*
+        version: link:../telemetry-gateway
+
   sinks/langfuse-sink:
     dependencies:
       '@rather-not-work-on/telemetry-gateway':
