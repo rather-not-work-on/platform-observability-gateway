@@ -38,6 +38,7 @@ The workspace bootstrap is intentionally thin in this step.
 - local runtime outputs stay under `runtime-artifacts/`
 - telemetry-gateway now owns the ingest envelope and shared replay/sink port surface
 - telemetry-gateway now owns the dispatch mode baseline that chooses buffer, sink, fanout, or noop
+- replay-worker now owns the replay policy baseline that chooses replay or skip before sink delivery
 - external sink or replay expansion stays in follow-up cards
 
 ## Policy Notes
