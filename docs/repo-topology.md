@@ -32,3 +32,4 @@ Workspace root descriptors may be added before runtime wiring is implemented. Th
 - Shared contract shape comes from `platform-contracts`.
 - Planning/orchestration policy belongs upstream in `platform-planningops`.
 - `services/telemetry-gateway` defines the public ingest and replay/sink port surface consumed by sibling packages.
+- `services/telemetry-gateway` also owns the dispatch mode baseline that chooses buffer, sink, or fanout behavior.

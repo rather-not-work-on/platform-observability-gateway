@@ -5,10 +5,12 @@ import type {
   TelemetryIngestRequest,
   TelemetrySinkDeliveryPort,
 } from "./telemetry_ports.js";
+import { resolveDispatchMode, type TelemetryDispatchMode } from "./dispatch_mode.js";
 
 export interface TelemetryGatewayDependencies {
   buffer?: TelemetryBufferAppendPort;
   sink?: TelemetrySinkDeliveryPort;
+  dispatchMode?: TelemetryDispatchMode;
 }
 
 export class TelemetryGateway implements TelemetryIngestPort {
@@ -16,12 +18,18 @@ export class TelemetryGateway implements TelemetryIngestPort {
 
   ingest(request: TelemetryIngestRequest): TelemetryIngestOutcome {
     const { envelope } = request;
+    const dispatchMode = resolveDispatchMode(this.dependencies.dispatchMode, this.dependencies);
 
-    this.dependencies.buffer?.append(envelope);
-    this.dependencies.sink?.deliver(envelope);
+    if (dispatchMode === "buffer_only" || dispatchMode === "fanout") {
+      this.dependencies.buffer?.append(envelope);
+    }
+
+    if (dispatchMode === "sink_only" || dispatchMode === "fanout") {
+      this.dependencies.sink?.deliver(envelope);
+    }
 
     return {
-      accepted: true,
+      accepted: dispatchMode !== "noop",
       runId: envelope.runId,
       eventName: envelope.eventName,
     };
