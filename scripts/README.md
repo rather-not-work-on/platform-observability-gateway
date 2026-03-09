@@ -5,6 +5,7 @@ Host repeatable local ingest/replay smoke, validation, and launcher tooling.
 
 ## Contents
 - ingest smoke scenarios
+- launcher-backed live smoke wrapper
 - evidence validators
 - contract pin validation
 - stack launcher helpers

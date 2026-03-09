@@ -3,6 +3,7 @@ set -euo pipefail
 
 MODE="dry-run"
 RUN_ID="o11y-launcher-$(date -u +%Y%m%dT%H%M%SZ)"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -25,10 +26,10 @@ mkdir -p runtime-artifacts/launcher runtime-artifacts/ingest
 
 if [[ "$MODE" == "dry-run" ]]; then
   echo "[launcher] dry-run mode: running replay/backfill drill"
-  python3 scripts/langfuse_ingest_smoke.py --scenario normal --run-id "$RUN_ID"
-  python3 scripts/langfuse_ingest_smoke.py --scenario delay_and_replay --run-id "$RUN_ID"
+  "$PYTHON_BIN" scripts/langfuse_ingest_smoke.py --scenario normal --run-id "$RUN_ID"
+  "$PYTHON_BIN" scripts/langfuse_ingest_smoke.py --scenario delay_and_replay --run-id "$RUN_ID"
 
-  python3 - <<PY
+  "$PYTHON_BIN" - <<PY
 import json
 from pathlib import Path
 from datetime import datetime, timezone
