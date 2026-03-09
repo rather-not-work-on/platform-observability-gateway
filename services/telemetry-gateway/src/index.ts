@@ -12,3 +12,4 @@ export type {
   TelemetrySinkDeliveryPort,
 } from "./telemetry_ports.js";
 export type { DispatchModeDependencies, TelemetryDispatchMode } from "./dispatch_mode.js";
+export type { TelemetryGatewayDependencies } from "./telemetry_gateway.js";
