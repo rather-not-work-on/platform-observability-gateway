@@ -1,15 +1,12 @@
 import type { TelemetryEnvelope, TelemetrySinkDeliveryOutcome } from "@rather-not-work-on/telemetry-gateway";
-
-function normalizeEventName(eventName: string): string {
-  return eventName.trim() || "telemetry.unknown";
-}
+import { normalizeTelemetryEnvelope } from "@rather-not-work-on/telemetry-gateway";
 
 export function buildDeliveryOutcome(envelope: TelemetryEnvelope): TelemetrySinkDeliveryOutcome {
-  const eventName = normalizeEventName(envelope.eventName);
+  const normalizedEnvelope = normalizeTelemetryEnvelope(envelope);
 
   return {
-    delivered: envelope.runId.trim().length > 0,
-    runId: envelope.runId,
-    eventName,
+    delivered: normalizedEnvelope.runId.length > 0,
+    runId: normalizedEnvelope.runId,
+    eventName: normalizedEnvelope.eventName,
   };
 }

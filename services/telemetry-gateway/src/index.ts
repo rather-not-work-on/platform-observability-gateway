@@ -1,4 +1,5 @@
 export { TelemetryGateway } from "./telemetry_gateway.js";
+export { normalizeTelemetryEnvelope } from "./envelope_policy.js";
 export { resolveDispatchMode } from "./dispatch_mode.js";
 export type {
   TelemetryBufferAppendOutcome,

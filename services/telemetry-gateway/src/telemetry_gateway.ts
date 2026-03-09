@@ -6,6 +6,7 @@ import type {
   TelemetrySinkDeliveryPort,
 } from "./telemetry_ports.js";
 import { resolveDispatchMode, type TelemetryDispatchMode } from "./dispatch_mode.js";
+import { normalizeTelemetryEnvelope } from "./envelope_policy.js";
 
 export interface TelemetryGatewayDependencies {
   buffer?: TelemetryBufferAppendPort;
@@ -17,7 +18,7 @@ export class TelemetryGateway implements TelemetryIngestPort {
   constructor(private readonly dependencies: TelemetryGatewayDependencies = {}) {}
 
   ingest(request: TelemetryIngestRequest): TelemetryIngestOutcome {
-    const { envelope } = request;
+    const envelope = normalizeTelemetryEnvelope(request.envelope);
     const dispatchMode = resolveDispatchMode(this.dependencies.dispatchMode, this.dependencies);
 
     if (dispatchMode === "buffer_only" || dispatchMode === "fanout") {
