@@ -36,6 +36,7 @@ The workspace bootstrap is intentionally thin in this step.
 
 - current Python scripts remain smoke and launcher tooling
 - local runtime outputs stay under `runtime-artifacts/`
+- telemetry-gateway now owns the ingest envelope and shared replay/sink port surface
 - external sink or replay expansion stays in follow-up cards
 
 ## Policy Notes

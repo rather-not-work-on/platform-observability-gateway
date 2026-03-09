@@ -31,3 +31,4 @@ Workspace root descriptors may be added before runtime wiring is implemented. Th
 - `platform-observability-gateway` owns ingest/replay evidence behavior and repo-local validation.
 - Shared contract shape comes from `platform-contracts`.
 - Planning/orchestration policy belongs upstream in `platform-planningops`.
+- `services/telemetry-gateway` defines the public ingest and replay/sink port surface consumed by sibling packages.

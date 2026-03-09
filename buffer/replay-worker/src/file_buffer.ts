@@ -1,8 +1,11 @@
-export class FileBuffer {
-  append(eventName: string): { buffered: boolean; eventName: string } {
+import type { TelemetryBufferAppendOutcome, TelemetryBufferAppendPort, TelemetryEnvelope } from "@rather-not-work-on/telemetry-gateway";
+
+export class FileBuffer implements TelemetryBufferAppendPort {
+  append(envelope: TelemetryEnvelope): TelemetryBufferAppendOutcome {
     return {
       buffered: true,
-      eventName,
+      runId: envelope.runId,
+      eventName: envelope.eventName,
     };
   }
 }

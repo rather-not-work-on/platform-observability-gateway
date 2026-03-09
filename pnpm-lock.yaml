@@ -12,11 +12,19 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
 
-  buffer/replay-worker: {}
+  buffer/replay-worker:
+    dependencies:
+      '@rather-not-work-on/telemetry-gateway':
+        specifier: workspace:*
+        version: link:../../services/telemetry-gateway
 
   services/telemetry-gateway: {}
 
-  sinks/langfuse-sink: {}
+  sinks/langfuse-sink:
+    dependencies:
+      '@rather-not-work-on/telemetry-gateway':
+        specifier: workspace:*
+        version: link:../../services/telemetry-gateway
 
 packages:
 
