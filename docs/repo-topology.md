@@ -34,3 +34,4 @@ Workspace root descriptors may be added before runtime wiring is implemented. Th
 - `services/telemetry-gateway` defines the public ingest and replay/sink port surface consumed by sibling packages.
 - `services/telemetry-gateway` also owns the dispatch mode baseline that chooses buffer, sink, or fanout behavior.
 - `buffer/replay-worker` owns the replay policy baseline that chooses whether a batch should be replayed before invoking the sink.
+- `sinks/langfuse-sink` owns the delivery policy baseline that normalizes sink delivery outcomes before returning.

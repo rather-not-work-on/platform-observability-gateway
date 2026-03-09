@@ -39,6 +39,7 @@ The workspace bootstrap is intentionally thin in this step.
 - telemetry-gateway now owns the ingest envelope and shared replay/sink port surface
 - telemetry-gateway now owns the dispatch mode baseline that chooses buffer, sink, fanout, or noop
 - replay-worker now owns the replay policy baseline that chooses replay or skip before sink delivery
+- langfuse-sink now owns the delivery policy baseline that normalizes sink delivery outcomes
 - external sink or replay expansion stays in follow-up cards
 
 ## Policy Notes
