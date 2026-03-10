@@ -25,6 +25,9 @@ python3 "$ROOT_DIR/scripts/validate_ingest_smoke_evidence.py" \
   --report "$OUT_DIR/$RUN_ID-delay_and_replay.json" \
   --output "$TMP_DIR/o11y-replay-validation.json"
 
+python3 "$ROOT_DIR/scripts/validate_delay_replay_reason_taxonomy_map.py" \
+  --output "$TMP_DIR/delay-replay-reason-taxonomy-map-report.json"
+
 NORMAL_REPORT="$OUT_DIR/$RUN_ID-normal.json"
 REPLAY_REPORT="$OUT_DIR/$RUN_ID-delay_and_replay.json"
 
