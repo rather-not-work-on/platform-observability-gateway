@@ -58,6 +58,9 @@ python3 scripts/validate_contract_pin.py
 bash scripts/test_observability_guardrails.sh
 ```
 
+Notes:
+- schema validation prefers `jsonschema` when installed and falls back to `scripts/jsonschema_compat.py` in offline environments.
+
 ## Local LangFuse Launcher and Replay/Backfill Drill
 ```bash
 bash scripts/langfuse_stack_launcher.sh --mode dry-run
