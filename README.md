@@ -53,9 +53,13 @@ python3 scripts/langfuse_ingest_smoke.py --scenario normal
 python3 scripts/langfuse_ingest_smoke.py --scenario delay_and_replay
 python3 scripts/validate_ingest_smoke_evidence.py \
   --report runtime-artifacts/ingest/<run_id>-delay_and_replay.json
+python3 scripts/validate_delay_replay_reason_taxonomy_map.py
 python3 scripts/validate_contract_pin.py
 bash scripts/test_observability_guardrails.sh
 ```
+
+Notes:
+- schema validation prefers `jsonschema` when installed and falls back to `scripts/jsonschema_compat.py` in offline environments.
 
 ## Local LangFuse Launcher and Replay/Backfill Drill
 ```bash
@@ -72,12 +76,14 @@ Artifacts:
 - checks:
   - ingest smoke (`normal`, `delay_and_replay`)
   - ingest smoke evidence validation (`scripts/validate_ingest_smoke_evidence.py`)
+  - delay/replay reason taxonomy map validation (`scripts/validate_delay_replay_reason_taxonomy_map.py`)
   - deterministic replay/dedupe assertions
   - contract pin validation (`scripts/validate_contract_pin.py`)
   - seeded failure guard (`scripts/test_observability_guardrails.sh`)
   - topology/module README regression (`scripts/test_module_readmes.sh`)
 - evidence contract: `contracts/c5-observability-ingest-smoke-artifact.schema.json`
 - reason taxonomy: `config/observability-reason-taxonomy.json`
+- reason map: `config/delay-replay-reason-taxonomy-map.json`
 - runbook: `docs/runbook/ingest-smoke-evidence-runbook.md`
 
 ### Contract Pin Remediation

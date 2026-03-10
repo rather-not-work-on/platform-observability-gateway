@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "taxonomy_source": "config/observability-reason-taxonomy.json",
+  "taxonomy_version": 1,
+  "reason_code_map": {
+    "ok": {
+      "severity": "info",
+      "retryable": false,
+      "operator_action": "none"
+    },
+    "replay_recovered": {
+      "severity": "warn",
+      "retryable": true,
+      "operator_action": "monitor_replay_latency"
+    },
+    "missing_required_fields": {
+      "severity": "error",
+      "retryable": false,
+      "operator_action": "fix_event_payload_contract"
+    },
+    "continuity_error": {
+      "severity": "error",
+      "retryable": true,
+      "operator_action": "investigate_replay_sequence"
+    }
+  }
+}
